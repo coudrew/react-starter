@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const path = require('path');
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 module.exports = {
     entry: 'src/index.js',
@@ -43,6 +44,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new webpack.ProgressPlugin(),
         new MiniCssExtractPlugin({
             filename: isDevelopment ? '[name].css' : '[name].[hash].css',
             chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
