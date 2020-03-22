@@ -1,1 +1,4 @@
-const a = ["2"];
+import app from './app';
+console.log(app);
+
+export { app };
