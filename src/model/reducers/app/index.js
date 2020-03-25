@@ -1,7 +1,5 @@
 import { createReducer } from '../utils';
 import { app } from '../../actions/index';
-console.log(app);
-console.log(createReducer);
 
 const INITIAL_STATE = {
 	loading: []
