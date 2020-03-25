@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
-import reducers from './reducers';
 
-export const createReducer = (INITIAL_STATE, handlers, key) => {
+const createReducer = (INITIAL_STATE, handlers, key) => {
 	(state = INITIAL_STATE, action) => {
 		const { type, payload } = action;
 		return handlers[type]
@@ -11,9 +10,11 @@ export const createReducer = (INITIAL_STATE, handlers, key) => {
 	};
 };
 
-const createRootReducer = history =>
+const createRootReducer = (reducers, history) =>
 	combineReducers({
 		router: connectRouter(history),
-		...reducers,
+		...reducers
 	});
-export default createRootReducer;
+
+export { createReducer, createRootReducer };
+// export default createRootReducer;
