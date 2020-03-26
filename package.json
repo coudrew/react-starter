@@ -5,7 +5,11 @@
 	"main": "src/index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "npx webpack --config webpack.config.js"
+		"build:ui": "npx webpack --config webpack.config.js",
+		"build:server": "cd server && npm run build",
+		"build": "npm run build:ui && npm run build:server",
+		"start": "cd server && npm run start",
+		"go": "npm run build && npm run start"
 	},
 	"author": "coudrew",
 	"license": "ISC",

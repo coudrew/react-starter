@@ -1,5 +1,5 @@
 import { createLogic } from 'redux-logic';
-import { PAGE_LOAD } from '../../model/actions/app';
+import { SET_LOADING } from '../../model/actions/app';
 
 const pageLoad = createLogic({
 	type: PAGE_LOAD,
@@ -8,7 +8,7 @@ const pageLoad = createLogic({
 			payload: { page }
 		} = action;
 		dispatch({
-			type: PAGE_LOAD,
+			type: SET_LOADING,
 			setLoading: page
 		});
 		done();
