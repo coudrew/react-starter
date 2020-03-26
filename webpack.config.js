@@ -8,7 +8,7 @@ module.exports = {
 	entry: './src/index.js',
 	output: {
 		filename: 'ui.bundle.js',
-		path: path.resolve(__dirname, 'build')
+		path: path.resolve(__dirname, 'build/assets/js')
 	},
 	module: {
 		rules: [
