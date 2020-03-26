@@ -1,18 +1,31 @@
 import { createLogic } from 'redux-logic';
-import { SET_LOADING } from '../../model/actions/app';
+import { SET_LOADING, SET_LOADED, PAGE_LOAD } from '../../model/actions/app';
+import { asyncLogic } from '../utils';
 
 const pageLoad = createLogic({
 	type: PAGE_LOAD,
 	process({ getState, action }, dispatch, done) {
-		const {
-			payload: { page }
-		} = action;
+		const { page } = action;
 		dispatch({
 			type: SET_LOADING,
-			setLoading: page
+			payload: { setLoading: page }
 		});
-		done();
+		return asyncLogic(loadPage)
+			.then(f => {
+				console.log(f);
+				dispatch({
+					type: SET_LOADED,
+					payload: { setFinishedLoading: page }
+				});
+				done();
+			})
+			.catch(e => done(e));
 	}
 });
+
+const loadPage = (resolve, reject) => {
+	const foo = 'foo';
+	resolve(foo);
+};
 
 export default pageLoad;
