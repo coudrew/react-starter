@@ -18,9 +18,15 @@ class View extends PureComponent {
 	render() {
 		console.log(this.props);
 		const {
-			match: { path }
+			match: { path },
+			app: { loading }
 		} = this.props;
-		return <ViewPresentation {...this.props} />;
+		console.log(loading.length);
+		return loading.length ? (
+			<h1>loading</h1>
+		) : (
+			<ViewPresentation {...this.props} />
+		);
 	}
 }
 

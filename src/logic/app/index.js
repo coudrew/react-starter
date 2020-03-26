@@ -13,11 +13,13 @@ const pageLoad = createLogic({
 		return asyncLogic(loadPage)
 			.then(f => {
 				console.log(f);
-				dispatch({
-					type: SET_LOADED,
-					payload: { setFinishedLoading: page }
-				});
-				done();
+				setTimeout(() => {
+					dispatch({
+						type: SET_LOADED,
+						payload: { setFinishedLoading: page }
+					}),
+						done();
+				}, 3000);
 			})
 			.catch(e => done(e));
 	}
