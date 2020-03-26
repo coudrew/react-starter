@@ -1,5 +1,5 @@
 import { createReducer } from '../utils';
-import { SET_LOADING } from '../../actions/app';
+import { SET_LOADING, SET_LOADED } from '../../actions/app';
 
 const INITIAL_STATE = {
 	loading: []
@@ -8,20 +8,26 @@ const INITIAL_STATE = {
 const setIsLoading = (state, payload) => {
 	const { loading } = state;
 	const { setLoading } = payload;
+
 	return {
-		loading: [...loading, setLoading],
-		...state
+		...state,
+		loading: [...loading, setLoading]
 	};
 };
 
-const pageLoad = (state, payload) => {
-	return setIsLoading(state, payload);
+const setIsFinishedLoading = (state, payload) => {
+	const { loading } = state;
+	const { setFinishedLoading } = payload;
+
+	return {
+		...state,
+		loading: loading.filter(loadingKey => loadingKey !== setFinishedLoading)
+	};
 };
 
 const handlers = {
-	[SET_LOADING]: setIsLoading
+	[SET_LOADING]: setIsLoading,
+	[SET_LOADED]: setIsFinishedLoading
 };
 
-const appReducer = createReducer(INITIAL_STATE, handlers);
-console.log(appReducer);
-export default appReducer;
+export default createReducer(INITIAL_STATE, handlers);
