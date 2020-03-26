@@ -1,5 +1,6 @@
 import { createLogic } from 'redux-logic';
 import { SET_LOADING, SET_LOADED, PAGE_LOAD } from '../../model/actions/app';
+import { asyncLogic } from '../utils';
 
 const pageLoad = createLogic({
 	type: PAGE_LOAD,
@@ -9,7 +10,7 @@ const pageLoad = createLogic({
 			type: SET_LOADING,
 			payload: { setLoading: page }
 		});
-		return new Promise(loadPage)
+		return asyncLogic(loadPage)
 			.then(f => {
 				console.log(f);
 				dispatch({
