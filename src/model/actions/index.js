@@ -1,1 +1,3 @@
-const a = ["2"];
+import app from './app';
+
+export { ...app };
