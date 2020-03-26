@@ -1,5 +1,5 @@
 import { createReducer } from '../utils';
-import { app } from '../../actions/index';
+import { SET_LOADING } from '../../actions/app';
 
 const INITIAL_STATE = {
 	loading: []
@@ -19,9 +19,9 @@ const pageLoad = (state, payload) => {
 };
 
 const handlers = {
-	[app.PAGE_LOAD]: pageLoad,
-	[app.SET_LOADING]: setIsLoading
+	[SET_LOADING]: setIsLoading
 };
 
 const appReducer = createReducer(INITIAL_STATE, handlers);
+console.log(appReducer);
 export default appReducer;

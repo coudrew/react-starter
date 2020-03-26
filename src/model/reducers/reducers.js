@@ -1,5 +1,6 @@
 import app from './app';
 
-export default {
-	app,
+const reducers = {
+	app
 };
+export default reducers;

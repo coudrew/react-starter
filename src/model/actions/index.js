@@ -1,4 +1,3 @@
 import app from './app';
-console.log(app);
 
-export { app };
+export { ...app };

@@ -49,5 +49,6 @@ module.exports = {
 			chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
 		})
 	],
+	mode: 'development',
 	devtool: 'source-map'
 };
