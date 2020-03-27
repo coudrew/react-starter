@@ -1,20 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-class View extends PureComponent {
+class ViewPresentation extends PureComponent {
 	render() {
-		const { routes } = this.props;
-		return (
-			<Switch>
-				{routes.map(({ path, component: Component }) => (
-					<Route
-						path={path}
-						render={routeProps => <Component {...routeProps} />}
-					/>
-				))}
-			</Switch>
-		);
+		const { routes, children } = this.props;
+		return <Fragment>{children}</Fragment>;
 	}
 }
 
-export default View;
+export default ViewPresentation;

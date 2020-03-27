@@ -1,5 +1,3 @@
 import { View } from './container';
 
-export default {
-	View,
-};
+export { View };

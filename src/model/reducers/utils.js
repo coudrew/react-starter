@@ -6,7 +6,6 @@ const createReducer = (INITIAL_STATE, handlers, key) => (
 	action
 ) => {
 	const { type, payload } = action;
-	console.log(state);
 	return handlers[type] ? handlers[type](state, payload || action) : state;
 };
 

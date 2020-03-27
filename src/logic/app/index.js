@@ -1,22 +1,24 @@
 import { createLogic } from 'redux-logic';
-import { SET_LOADING, SET_LOADED, PAGE_LOAD } from '../../model/actions/app';
+import { SET_LOADING, SET_LOADED } from '../../model/actions/app';
 import { asyncLogic } from '../utils';
 
 const pageLoad = createLogic({
-	type: PAGE_LOAD,
-	process({ getState, action }, dispatch, done) {
-		const { page } = action;
+	type: '@@router/LOCATION_CHANGE',
+	process({ action: { payload } }, dispatch, done) {
+		const {
+			location: { pathname }
+		} = payload;
+		console.log(payload);
 		dispatch({
 			type: SET_LOADING,
-			payload: { setLoading: page }
+			payload: { setLoading: pathname }
 		});
 		return asyncLogic(loadPage)
 			.then(f => {
-				console.log(f);
 				setTimeout(() => {
 					dispatch({
 						type: SET_LOADED,
-						payload: { setFinishedLoading: page }
+						payload: { setFinishedLoading: pathname }
 					}),
 						done();
 				}, 3000);
