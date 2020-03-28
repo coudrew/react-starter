@@ -8,7 +8,7 @@ const pageLoad = createLogic({
 		const {
 			location: { pathname }
 		} = payload;
-		console.log(payload);
+
 		dispatch({
 			type: SET_LOADING,
 			payload: { setLoading: pathname }

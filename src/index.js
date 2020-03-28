@@ -43,7 +43,9 @@ class Shell extends PureComponent {
 		return (
 			<Provider store={store}>
 				<ConnectedRouter history={history}>
-					<ShellRouting routeConfig={routeConfigs} />
+					<Switch>
+						<ShellRouting routeConfig={routeConfigs} />
+					</Switch>
 				</ConnectedRouter>
 			</Provider>
 		);
@@ -61,7 +63,6 @@ class ShellSwitch extends PureComponent {
 						path={path}
 						exact
 						key={path}
-						// component={WrappedComponent}
 						render={routeProps => (
 							<WrappedComponent {...routeProps} />
 						)}
@@ -76,14 +77,9 @@ class ShellSwitch extends PureComponent {
 
 	render() {
 		const { routes: Routes } = this.state;
-		console.log('rendering shell switch');
-		return (
-			<Switch>
-				<Routes />
-			</Switch>
-		);
+		return <Routes />;
 	}
 }
 
-const ShellRouting = withRouter(connect()(ShellSwitch));
+const ShellRouting = withRouter(connect(state => ({}))(ShellSwitch));
 ReactDOM.render(<Shell />, document.getElementById('react-root'));

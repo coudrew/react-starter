@@ -6,36 +6,14 @@ import { PAGE_LOAD } from '../../../model/actions/app';
 import { getIsLoadingItem } from '../../../model/selectors/app';
 
 class View extends Component {
-	constructor() {
-		super();
-		this.state = {
-			loading: true
-		};
-	}
-
-	// componentDidUpdate(props) {
-	// 	const { pageIsLoading } = props;
-	// 	if (!pageIsLoading) {
-	// 		console.log('setting loaded');
-	// 		this.setState({ loading: false });
-	// 	}
-	// }
-
 	shouldComponentUpdate(nextProps) {
-		const { pageIsLoading } = nextProps;
-		return !pageIsLoading;
+		const { pageIsLoading } = this.props;
+		return nextProps.pageIsLoading !== pageIsLoading;
 	}
 
 	render() {
-		const {
-			children,
-			match: { path },
-			pageIsLoading
-		} = this.props;
-		const { loading } = this.state;
-		console.log(`rendering ${path} is loading ${pageIsLoading}`);
-		console.log(pageIsLoading && true);
-		return !(pageIsLoading && true) ? (
+		const { children, pageIsLoading } = this.props;
+		return pageIsLoading ? (
 			<h1>loading</h1>
 		) : (
 			<ViewPresentation {...this.props}>{children}</ViewPresentation>
