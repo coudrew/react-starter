@@ -4,7 +4,7 @@ import { Provider, connect } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import configureStore, { history } from './model/reducers';
-import { View } from './view/components';
+import { View, PseudoLink } from './view/components';
 
 const store = configureStore();
 const routeConfigs = [
@@ -13,8 +13,9 @@ const routeConfigs = [
 		component: () => (
 			<View>
 				<h1>hello</h1>
-				<Link to={'/two'}>two</Link>
-				<Link to={'/three'}>three</Link>
+				<PseudoLink path="/four">four</PseudoLink>
+				<PseudoLink path={'/two'}>two</PseudoLink>
+				<PseudoLink path={'/three'}>three</PseudoLink>
 			</View>
 		)
 	},
@@ -23,7 +24,7 @@ const routeConfigs = [
 		component: () => (
 			<View>
 				<h1>two</h1>
-				<Link to={'/'}>home</Link>
+				<PseudoLink path={'/'}>home</PseudoLink>
 			</View>
 		)
 	},
@@ -32,19 +33,43 @@ const routeConfigs = [
 		component: () => (
 			<View>
 				<h1>three</h1>
-				<Link to={'/'}>home</Link>
+				<PseudoLink path={'/'}>home</PseudoLink>
+			</View>
+		)
+	},
+	{
+		path: '/four',
+		component: () => (
+			<View>
+				<h1>four</h1>
+				<PseudoLink path={'/'}>home</PseudoLink>
 			</View>
 		)
 	}
 ];
 
-class Shell extends PureComponent {
+class Shell extends Component {
+	shouldComponentUpdate() {
+		return false;
+	}
+
 	render() {
 		return (
 			<Provider store={store}>
 				<ConnectedRouter history={history}>
 					<Switch>
-						<ShellRouting routeConfig={routeConfigs} />
+						{routeConfigs.map(
+							({ path, component: WrappedComponent }) => (
+								<Route
+									path={path}
+									exact
+									key={path}
+									render={routeProps => (
+										<WrappedComponent {...routeProps} />
+									)}
+								/>
+							)
+						)}
 					</Switch>
 				</ConnectedRouter>
 			</Provider>
@@ -52,34 +77,4 @@ class Shell extends PureComponent {
 	}
 }
 
-class ShellSwitch extends PureComponent {
-	constructor(props) {
-		super();
-		const { routeConfig } = props;
-		const routes = () => (
-			<Fragment>
-				{routeConfig.map(({ path, component: WrappedComponent }) => (
-					<Route
-						path={path}
-						exact
-						key={path}
-						render={routeProps => (
-							<WrappedComponent {...routeProps} />
-						)}
-					/>
-				))}
-			</Fragment>
-		);
-		this.state = {
-			routes
-		};
-	}
-
-	render() {
-		const { routes: Routes } = this.state;
-		return <Routes />;
-	}
-}
-
-const ShellRouting = withRouter(connect(state => ({}))(ShellSwitch));
 ReactDOM.render(<Shell />, document.getElementById('react-root'));

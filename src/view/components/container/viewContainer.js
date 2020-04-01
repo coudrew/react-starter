@@ -12,7 +12,14 @@ class View extends Component {
 	}
 
 	render() {
-		const { children, pageIsLoading } = this.props;
+		const {
+			children,
+			pageIsLoading,
+			match: { path }
+		} = this.props;
+		console.log(
+			`rendering view container path: ${path}, pageIsLoading: ${pageIsLoading}`
+		);
 		return pageIsLoading ? (
 			<h1>loading</h1>
 		) : (
