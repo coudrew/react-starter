@@ -38,13 +38,28 @@ const routeConfigs = [
 	}
 ];
 
-class Shell extends PureComponent {
+class Shell extends Component {
+	shouldComponentUpdate() {
+		return false;
+	}
+
 	render() {
 		return (
 			<Provider store={store}>
 				<ConnectedRouter history={history}>
 					<Switch>
-						<ShellRouting routeConfig={routeConfigs} />
+						{routeConfigs.map(
+							({ path, component: WrappedComponent }) => (
+								<Route
+									path={path}
+									exact
+									key={path}
+									render={routeProps => (
+										<WrappedComponent {...routeProps} />
+									)}
+								/>
+							)
+						)}
 					</Switch>
 				</ConnectedRouter>
 			</Provider>
@@ -52,34 +67,4 @@ class Shell extends PureComponent {
 	}
 }
 
-class ShellSwitch extends PureComponent {
-	constructor(props) {
-		super();
-		const { routeConfig } = props;
-		const routes = () => (
-			<Fragment>
-				{routeConfig.map(({ path, component: WrappedComponent }) => (
-					<Route
-						path={path}
-						exact
-						key={path}
-						render={routeProps => (
-							<WrappedComponent {...routeProps} />
-						)}
-					/>
-				))}
-			</Fragment>
-		);
-		this.state = {
-			routes
-		};
-	}
-
-	render() {
-		const { routes: Routes } = this.state;
-		return <Routes />;
-	}
-}
-
-const ShellRouting = withRouter(connect(state => ({}))(ShellSwitch));
 ReactDOM.render(<Shell />, document.getElementById('react-root'));
