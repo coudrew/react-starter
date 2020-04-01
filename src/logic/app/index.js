@@ -1,5 +1,6 @@
 import { createLogic } from 'redux-logic';
-import { SET_LOADING, SET_LOADED } from '../../model/actions/app';
+import { push } from 'connected-react-router';
+import { SET_LOADING, SET_LOADED, NAVIGATE_TO } from '../../model/actions/app';
 import { asyncLogic } from '../utils';
 
 const pageLoad = createLogic({
@@ -32,4 +33,20 @@ const loadPage = (resolve, reject) => {
 	resolve(foo);
 };
 
-export default pageLoad;
+const navigateTo = createLogic({
+	type: NAVIGATE_TO,
+	process({ action }, dispatch, done) {
+		const {
+			payload: { path }
+		} = action;
+		dispatch({
+			type: SET_LOADING,
+			payload: { setLoading: path }
+		});
+		return Promise.resolve().then(() => {
+			dispatch(push(path));
+			done();
+		});
+	}
+});
+export { pageLoad, navigateTo };
