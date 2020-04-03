@@ -5,17 +5,13 @@ import { Spinner } from '../presentation';
 
 class SpinnerContainer extends Component {
 	render() {
-		const { queue } = this.props;
-		return <Spinner loading={queue[0]} />;
+		const { loading } = this.props;
+		return <Spinner loading={loading[0]} />;
 	}
 }
 
-const mapStateToProps = ({
-	app: {
-		loading: { queue }
-	}
-}) => ({
-	queue
+const mapStateToProps = ({ app: { loading } }) => ({
+	loading
 });
 
 export default withRouter(connect(mapStateToProps)(SpinnerContainer));

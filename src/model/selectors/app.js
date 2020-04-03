@@ -1,10 +1,9 @@
 export const getIsLoadingItem = key => ({ app: { loading } }) => {
-	const { set } = loading;
-	return key ? set.has(key) || set.has('init') : set.size;
+	return key
+		? loading.includes(key) || loading.includes('init')
+		: loading.length;
 };
 
 export const getIsLoading = ({ app: { loading } }) => {
-	const { set } = loading;
-
-	return set && set.size;
+	return loading && loading[0];
 };
