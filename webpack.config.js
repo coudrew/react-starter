@@ -20,23 +20,23 @@ module.exports = {
 				}
 			},
 			{
-				test: /\.module\.s(c|a)ss$/,
+				test: /\.s[ac]ss$/,
 				loader: [
-					isDevelopment
-						? 'style-loader'
-						: MiniCssExtractPlugin.loader,
+					{
+						loader: 'style-loader'
+					},
+					{
+						loader: MiniCssExtractPlugin.loader
+					},
 					{
 						loader: 'css-loader',
 						options: {
 							modules: true,
-							sourcMap: isDevelopment
+							localsConvention: 'asIs'
 						}
 					},
 					{
-						loader: 'sass-loader',
-						options: {
-							sourcMap: isDevelopment
-						}
+						loader: 'sass-loader'
 					}
 				]
 			}
@@ -45,8 +45,7 @@ module.exports = {
 	plugins: [
 		new webpack.ProgressPlugin(),
 		new MiniCssExtractPlugin({
-			filename: isDevelopment ? '[name].css' : '[name].[hash].css',
-			chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
+			filename: '[name].css'
 		})
 	],
 	mode: 'development',

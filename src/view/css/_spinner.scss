@@ -1,0 +1,27 @@
+:global {
+	@keyframes :global(spin) {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	.spinner-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+	}
+	.spinner {
+		width: 2rem;
+		height: 2rem;
+		border: 1rem solid rgba($color: #a3449b, $alpha: 0.7);
+		border-top: 1rem solid rgba($color: #a3449b, $alpha: 1);
+		border-radius: 50%;
+		animation: spin 1.5s linear infinite;
+	}
+}

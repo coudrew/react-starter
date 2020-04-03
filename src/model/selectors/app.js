@@ -1,14 +1,9 @@
-export const getIsLoadingItem = key => state => {
-	const {
-		app: { loading }
-	} = state;
-	return key ? loading.has(key) || loading.has('init') : loading.size;
+export const getIsLoadingItem = key => ({ app: { loading } }) => {
+	return key
+		? loading.includes(key) || loading.includes('init')
+		: loading.length;
 };
 
-export const getIsLoading = state => {
-	const {
-		app: { loading }
-	} = state;
-
-	return loading && loading.size;
+export const getIsLoading = ({ app: { loading } }) => {
+	return loading && loading[0];
 };

@@ -12,7 +12,8 @@ app.get('/*', (req, res) => {
 	const baseAssetUrl = `${req.protocol}://${req.get('host')}`;
 	res.render('home', {
 		layout: false,
-		reactSrc: `${baseAssetUrl}/js/ui.bundle.js`
+		reactSrc: `${baseAssetUrl}/js/ui.bundle.js`,
+		cssPath: `${baseAssetUrl}/js/main.css`
 	});
 });
 
