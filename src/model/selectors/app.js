@@ -1,14 +1,10 @@
-export const getIsLoadingItem = key => state => {
-	const {
-		app: { loading }
-	} = state;
-	return key ? loading.has(key) || loading.has('init') : loading.size;
+export const getIsLoadingItem = key => ({ app: { loading } }) => {
+	const { set } = loading;
+	return key ? set.has(key) || set.has('init') : set.size;
 };
 
-export const getIsLoading = state => {
-	const {
-		app: { loading }
-	} = state;
+export const getIsLoading = ({ app: { loading } }) => {
+	const { set } = loading;
 
-	return loading && loading.size;
+	return set && set.size;
 };

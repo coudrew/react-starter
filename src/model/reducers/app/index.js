@@ -2,36 +2,49 @@ import { createReducer } from '../utils';
 import { SET_LOADING, SET_LOADED } from '../../actions/app';
 
 const INITIAL_STATE = {
-	loading: new Set(['init'])
+	loading: {
+		set: new Set(['init']),
+		queue: ['init']
+	}
 };
 
 const setIsLoading = (state, payload) => {
-	const { loading } = state;
+	const {
+		loading: { set }
+	} = state;
 	const { setLoading } = payload;
-	if (loading.has('init')) {
-		loading.delete('init');
+	if (set.has('init')) {
+		set.delete('init');
 	}
-	loading.add(setLoading);
+	set.add(setLoading);
 
 	return {
 		...state,
-		loading
+		loading: {
+			set,
+			queue: Array.from(set)
+		}
 	};
 };
 
 const setIsFinishedLoading = (state, payload) => {
-	const { loading } = state;
+	const {
+		loading: { set }
+	} = state;
 	const { setFinishedLoading } = payload;
-	if (loading.has('init')) {
-		loading.delete('init');
+	if (set.has('init')) {
+		set.delete('init');
 	}
-	if (loading.has(setFinishedLoading)) {
-		loading.delete(setFinishedLoading);
+	if (set.has(setFinishedLoading)) {
+		set.delete(setFinishedLoading);
 	}
 
 	return {
 		...state,
-		loading
+		loading: {
+			set,
+			queue: Array.from(set)
+		}
 	};
 };
 

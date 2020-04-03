@@ -5,6 +5,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import configureStore, { history } from './model/reducers';
 import { View, PseudoLink } from './view/components';
+import './view/css/index.scss';
 
 const store = configureStore();
 const routeConfigs = [
