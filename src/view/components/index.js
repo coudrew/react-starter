@@ -1,4 +1,4 @@
-import { View, Spinner } from './container';
-import { PseudoLink } from './presentation';
+import { View } from './container';
+import { PseudoLink, Spinner } from './presentation';
 
 export { View, PseudoLink, Spinner };

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { ViewPresentation } from '../presentation';
-import Spinner from './spinner';
+import { ViewPresentation, Spinner } from '../presentation';
 import { getIsLoadingItem } from '../../../model/selectors/app';
 
 class View extends Component {
