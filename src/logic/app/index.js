@@ -6,11 +6,10 @@ import { SET_PAGE_DATA } from '../../model/actions/pages';
 
 const pageLoad = createLogic({
 	type: '@@router/LOCATION_CHANGE',
-	process({ getState, action: { payload } }, dispatch, done) {
+	async process({ getState, action: { payload } }, dispatch, done) {
 		const {
 			location: { pathname }
 		} = payload;
-		console.log(getState());
 		const key = pathname === '/' ? 'home' : pathname.replace('/', '');
 		const hasPageData = getState().pages[key];
 		if (hasPageData) {
@@ -24,31 +23,21 @@ const pageLoad = createLogic({
 			type: SET_LOADING,
 			payload: { setLoading: pathname }
 		});
-		return asyncLogic(loadPage, {dispatch, key})
-			.then(f => {
-				setTimeout(() => {
-					dispatch({
-						type: SET_LOADED,
-						payload: { setFinishedLoading: pathname }
-					}),
-						done();
-				}, 3000);
-			})
-			.catch(e => done(e));
+		await new Promise(res => setTimeout(() => {
+			dispatch({
+				type: SET_PAGE_DATA,
+				payload: { key, data: key.toUpperCase() }
+			});
+			res();
+		}, 3000));
+
+		dispatch({
+			type: SET_LOADED,
+			payload: { setFinishedLoading: pathname }
+		});
+		done();
 	}
 });
-
-const loadPage = ({dispatch, key}) => (resolve, reject) => {
-	const foo = 'foo';
-	dispatch({
-		type: SET_PAGE_DATA,
-		payload: {
-			key,
-			data: key.toUpperCase()
-		}
-	});
-	resolve(foo);
-};
 
 const navigateTo = createLogic({
 	type: NAVIGATE_TO,
@@ -60,10 +49,8 @@ const navigateTo = createLogic({
 			type: SET_LOADING,
 			payload: { setLoading: path }
 		});
-		return Promise.resolve().then(() => {
-			dispatch(push(path));
-			done();
-		});
+		dispatch(push(path));
+		done();
 	}
 });
 export { pageLoad, navigateTo };
